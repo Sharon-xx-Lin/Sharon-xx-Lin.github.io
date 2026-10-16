@@ -1,0 +1,14 @@
+# ---- 系统 ----
+.DS_Store
+Thumbs.db
+
+# ---- 工作区数据：截图、项目记忆等，不属于站点内容，不上传 ----
+.workbuddy/
+
+# ---- 构建产物：由 tools/build_dist.py 生成，随时可重建 ----
+dist/
+
+# ---- Python（tools/ 里的脚本用） ----
+.venv/
+__pycache__/
+*.pyc

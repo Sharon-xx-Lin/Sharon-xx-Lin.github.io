@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>林晓煊 SHARON LIN · 个人主页</title>
+  <meta name="description" content="林晓煊（Sharon Lin）——AI 产品 × 商业化产品，浙江大学金融硕士在读。字节跳动·飞书 / 小红书 / 滴滴出行产品实习经历。" />
+  <meta name="author" content="林晓煊 Sharon Lin" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- 社交分享卡片：链接发到微信 / 领英 / X 时显示标题 + 简介 + 封面，而不是一条裸链接。
+       ⚠️ og:image / og:url 规范上要用**绝对地址**（微信、领英对相对路径不友好）。
+       拿到正式域名后，把下面 og:image / twitter:image 的值改成
+       https://你的域名/assets/img/og-cover.png 即可。 -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="林晓煊 SHARON LIN" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="林晓煊 SHARON LIN · 个人主页" />
+  <meta property="og:description" content="AI 产品 × 商业化产品，浙江大学金融硕士在读。字节跳动·飞书 / 小红书 / 滴滴出行产品实习经历。" />
+  <meta property="og:image" content="assets/img/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="林晓煊 SHARON LIN · 个人主页" />
+  <meta name="twitter:description" content="AI 产品 × 商业化产品，浙江大学金融硕士在读。" />
+  <meta name="twitter:image" content="assets/img/og-cover.png" />
+
+  <!-- 结构化数据：帮搜索引擎把这份主页认成「一个人」而不是一个普通网页 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "林晓煊",
+    "alternateName": "Sharon Lin",
+    "jobTitle": "AI 产品 / 商业化产品",
+    "description": "浙江大学金融硕士在读，字节跳动·飞书 / 小红书 / 滴滴出行产品实习经历。",
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "浙江大学" },
+    "knowsAbout": ["AI 产品", "商业化产品", "产品运营", "数据分析"]
+  }
+  </script>
+
+  <!-- 关键：在样式生效前先套用主题，避免刷新时深色/浅色闪一下（FOUC） -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = "dark";
+      try {
+        var s = localStorage.getItem("site-theme");
+        if (s === "light" || s === "dark") t = s;   // 用户手动选过 → 以选择为准
+      } catch (e) {}                                 // 无痕模式等禁用存储时静默降级
+      d.setAttribute("data-theme", t);
+    })();
+  </script>
+  <!-- 有 JS 时才隐藏 .reveal（避免脚本失效导致整页空白）；并做兜底显示 -->
+  <script>
+    document.documentElement.classList.add("js");
+    window.setTimeout(function () {
+      if (window.__siteInit) return;
+      var els = document.querySelectorAll(".reveal");
+      for (var i = 0; i < els.length; i++) {
+        var r = els[i].getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) els[i].classList.add("visible");
+      }
+    }, 2500);
+  </script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='black'/><rect x='3' y='3' width='10' height='10' fill='white'/><rect x='6' y='6' width='4' height='4' fill='black'/></svg>" />
+  <link rel="stylesheet" href="assets/fonts/cubic/result.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- 顶部阅读进度条 -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- ======= 导航 ======= -->
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <!-- 中文名优先（英文名退为副标签） -->
+      <a class="nav-logo" href="#top">
+        <span class="nav-logo-zh">林晓煊</span>
+        <span class="nav-logo-en">SHARON LIN</span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#about" data-i18n="nav_about">关于我</a>
+        <a href="#edu" data-i18n="nav_edu">教育</a>
+        <a href="#exp" data-i18n="nav_exp">经历</a>
+        <a href="#proj" data-i18n="nav_proj">项目</a>
+        <a href="#skills" data-i18n="nav_skills">技能</a>
+        <a href="#life" data-i18n="nav_life">生活</a>
+        <a href="#contact" data-i18n="nav_contact">联系</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- 主题切换：图标随主题切换（深色下显示太阳、浅色下显示月亮，由 CSS 控制显隐） -->
+        <button class="icon-btn" id="themeToggle" type="button" title="切换浅色模式" aria-label="切换浅色模式">
+          <svg class="i-sun" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path fill="currentColor" d="M8 1h1v1H8zM12 2h1v1h-1zM14 4h1v1h-1zM15 7h1v2h-1zM14 11h1v1h-1zM12 13h1v1h-1zM8 14h1v1H8zM4 13h1v1H4zM2 11h1v1H2zM1 7h1v2H1zM2 4h1v1H2zM4 2h1v1H4zM7 4h2v1H7zM10 6h1v4h-1zM7 11h2v1H7zM5 6h1v4H5z"/>
+          </svg>
+          <svg class="i-moon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path fill="currentColor" d="M6 1h3v1H6zM4 2h5v1H4zM3 3h5v1H3zM2 4h5v1H2zM2 5h4v1H2zM1 6h4v3H1zM2 9h4v1H2zM2 10h5v1H2zM3 11h5v1H3zM4 12h5v1H4zM6 13h3v1H6z"/>
+          </svg>
+        </button>
+        <!-- 语言切换（英文版开发中） -->
+        <button class="icon-btn" id="langToggle" title="English" aria-label="切换 English">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path fill="currentColor" d="M2 3h12v1H2zM2 3h5v10H4V6H2zm6 0h6v1h-3.2c.5 1.4 1.5 2.6 3 3.4l-.5.9c-1.3-.7-2.3-1.7-2.9-2.9-.6 1.3-1.6 2.4-2.9 3.1l-.5-.9c1.5-.8 2.5-2.1 3-3.6H8zM9 12h6v1H9z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ======= HERO ======= -->
+    <section class="hero">
+      <div class="hero-inner">
+        <!-- 上：中文名（底端与右侧证件照底端压在同一条分隔线上） -->
+        <h1 class="hero-name reveal" id="heroName">林晓煊</h1>
+        <div class="hero-portrait reveal">
+          <figure class="px-frame">
+            <img src="assets/img/portrait.jpg" alt="林晓煊证件照" />
+          </figure>
+        </div>
+        <!-- 下：英文名 / 方向 / 一句话 / 入口 -->
+        <div class="hero-rest">
+          <p class="hero-en reveal">SHARON LIN<span class="cursor">_</span></p>
+          <p class="hero-role reveal">AI 产品 × 商业化产品<span class="sep">/</span>浙江大学金融硕士在读</p>
+          <p class="hero-line reveal">我们存在于一生仅一次的当下。<br/>Stay hungry, stay foolish.</p>
+          <div class="hero-cta reveal">
+            <a class="btn btn-solid" href="#exp" data-i18n="hero_cta1">查看经历</a>
+            <a class="btn btn-ghost" href="#contact" data-i18n="hero_cta2">联系我</a>
+          </div>
+        </div>
+        <!-- 通栏要点条：铺满整幅宽度，收住首屏下半部 -->
+        <ul class="hero-facts reveal">
+          <li>字节·飞书 / 小红书 / 滴滴 产品实习</li>
+          <li>浙大商科本硕在读</li>
+          <li>AI Native | 学科交叉</li>
+        </ul>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">
+        <span data-i18n="scroll">向下滚动</span>
+        <span class="scroll-arrow">▼</span>
+      </div>
+    </section>
+
+    <!-- ======= 跑马灯 ======= -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>AI PRODUCT · COMMERCIAL PRODUCT · LARK · XIAOHONGSHU · DIDi · EVALUATION · AGENT · SQL · PYTHON · PRODUCT DESIGN · HANGZHOU · ZHEJIANG UNIVERSITY · </span>
+        <span>AI PRODUCT · COMMERCIAL PRODUCT · LARK · XIAOHONGSHU · DIDi · EVALUATION · AGENT · SQL · PYTHON · PRODUCT DESIGN · HANGZHOU · ZHEJIANG UNIVERSITY · </span>
+      </div>
+    </div>
+
+    <!-- ======= 关于我 ======= -->
+    <section class="section" id="about">
+      <div class="section-head reveal">
+        <span class="section-no">01</span>
+        <h2 data-i18n="about_t">关于我</h2>
+        <span class="section-en">ABOUT ME</span>
+      </div>
+      <div class="contrast reveal">
+        <div class="contrast-row">
+          <div class="contrast-cell">金融科班<br/><span class="dim">国际经济与贸易 → 金融硕士</span></div>
+          <div class="contrast-arrow" aria-hidden="true">▶▶▶</div>
+          <div class="contrast-cell">AI 产品<br/><span class="dim">字节·飞书 / 小红书 两段 AI 实习</span></div>
+        </div>
+        <div class="contrast-row">
+          <div class="contrast-cell">文科背景<br/><span class="dim">人文学科的滋养</span></div>
+          <div class="contrast-arrow" aria-hidden="true">▶▶▶</div>
+          <div class="contrast-cell">skill / 小工具 / 各类 demo / 视觉</div>
+        </div>
+        <div class="contrast-row">
+          <div class="contrast-cell">数据驱动<br/><span class="dim">数据清洗 · 指标体系 · 看板构建</span></div>
+          <div class="contrast-arrow" aria-hidden="true">▶▶▶</div>
+          <div class="contrast-cell">用户语言<br/><span class="dim">文案 / 推文 / 社区运营</span></div>
+        </div>
+      </div>
+      <div class="facts reveal">
+        <div class="fact"><span class="fact-k">坐标</span><span class="fact-v">浙江 · 杭州</span></div>
+        <div class="fact"><span class="fact-k">学校</span><span class="fact-v">浙江大学</span></div>
+        <div class="fact"><span class="fact-k">方向</span><span class="fact-v">金融学硕士 · 数字金融（2026-2028）</span></div>
+        <div class="fact"><span class="fact-k">英语</span><span class="fact-v">雅思 7.0 · 流利</span></div>
+        <div class="fact"><span class="fact-k">MBTI</span><span class="fact-v">INFJ</span></div>
+        <div class="fact"><span class="fact-k">状态</span><span class="fact-v">求职中 · 实习/校招均可聊</span></div>
+      </div>
+    </section>
+
+    <!-- ======= 教育经历 ======= -->
+    <section class="section" id="edu">
+      <div class="section-head reveal">
+        <span class="section-no">02</span>
+        <h2 data-i18n="edu_t">教育经历</h2>
+        <span class="section-en">EDUCATION</span>
+      </div>
+      <ol class="timeline">
+        <li class="tl-node reveal">
+          <div class="tl-badge">01</div>
+          <div class="tl-body">
+            <div class="tl-top"><b>浙江大学 · 本科</b><span class="tl-date">2022.08 — 2026.06</span></div>
+            <p class="tl-major">国际经济与贸易 · 经济学院</p>
+            <ul class="tl-tags">
+              <li>均绩 3.93/4</li><li>雅思 7.0</li><li>校设奖学金</li><li>国家励志奖学金</li><li>校优秀学生</li><li>五星级志愿者</li>
+            </ul>
+          </div>
+        </li>
+        <li class="tl-node reveal">
+          <div class="tl-badge">02</div>
+          <div class="tl-body">
+            <div class="tl-top"><b>浙江大学 · 硕士研究生</b><span class="tl-date">2026.09 — 2028.06</span></div>
+            <p class="tl-major">金融学 · 数字金融方向 · 经济学院</p>
+            <ul class="tl-tags">
+              <li>Python 与大数据分析</li><li>量化投资</li><li>科创金融</li><li>衍生金融工具</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ======= 实习经历 ======= -->
+    <section class="section" id="exp">
+      <div class="section-head reveal">
+        <span class="section-no">03</span>
+        <h2 data-i18n="exp_t">实习经历</h2>
+        <span class="section-en">EXPERIENCE</span>
+      </div>
+      <div class="accordion">
+
+        <details class="acc-item reveal" open>
+          <summary>
+            <span class="acc-no">01</span>
+            <span class="acc-co">字节跳动 · 飞书</span>
+            <span class="acc-role">AI 策略产品实习生</span>
+            <span class="acc-date">2026.05 — 2026.09</span>
+          </summary>
+          <div class="acc-body">
+            <div class="proj-block">
+              <h4>AI 分析 · 推荐工作流生成</h4>
+              <p>将周期性问数需求转化为可被 Workflow Agent 消费的自动化建流指令，降低重复提问成本。</p>
+              <ul>
+                <li>设计「工具调用 + 单意图 + 可周期复用」三类推荐条件与拒识边界，提升推荐可控性与可解释性</li>
+                <li>制定 AI 建流生成规范：核心指标零丢失、执行时间可解析、接收方明确</li>
+                <li>搭建上线前黑盒评测体系：四层链路拆分 + <b>100 条</b>正负样本，覆盖业务域、语义噪声与拒识边界</li>
+              </ul>
+            </div>
+            <div class="proj-block">
+              <h4>Decision Agent Agentic 升级</h4>
+              <p>支撑 Base AI 从单一能力调用升级为多任务编排，把自然语言指令转化为可执行的 Agent/Tool 调度路径。</p>
+              <ul>
+                <li>制定「端到端得分」+「路由分数」双口径评测策略，设计 <b>980 条</b>样本、覆盖全部 domain agent 场景</li>
+                <li>归因 9 类错题场景并与算法协作闭环优化，路由得分正确率稳定 <b>95%+</b></li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item reveal">
+          <summary>
+            <span class="acc-no">02</span>
+            <span class="acc-co">小红书</span>
+            <span class="acc-role">AI 产品实习生</span>
+            <span class="acc-date">2025.11 — 2026.04</span>
+          </summary>
+          <div class="acc-body">
+            <div class="proj-block">
+              <h4>DataAgent · AI 分析</h4>
+              <ul>
+                <li>参与 UGC 分析报告产品设计，数据、文本与 AI 分析自由组合，辅助平台 AI 自主率提升至 <b>60%</b></li>
+                <li>负责需求调研、竞品分析、功能方案设计与 PRD 输出，参与新旧版本切换与跨团队协调</li>
+              </ul>
+            </div>
+            <div class="proj-block">
+              <h4>问题检修 Skill</h4>
+              <ul>
+                <li>参与 AI 幻觉问题定义与分类体系建设，构建测试集并持续优化策略与提示词</li>
+                <li>实现检测正确率 <b>95%</b>、修复正确率 <b>83.5%</b></li>
+              </ul>
+            </div>
+            <div class="proj-block">
+              <h4>封面解析工具</h4>
+              <ul>
+                <li>参与全链路设计：图片抽取 → 描述生成 → 质量打分 → 结果分层 → 优化建议</li>
+                <li>双 Prompt 设计（描述生成 + 质量评分），沉淀为多业务可复用的平台通用能力</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item reveal">
+          <summary>
+            <span class="acc-no">03</span>
+            <span class="acc-co">滴滴出行</span>
+            <span class="acc-role">数据产品实习生</span>
+            <span class="acc-date">2025.06 — 2025.10</span>
+          </summary>
+          <div class="acc-body">
+            <div class="proj-block">
+              <h4>业务部门数据基建</h4>
+              <ul>
+                <li>基于 SQL / Excel / BI 搭建 <b>10+</b> 业务看板、<b>15+</b> 数据集，数据服务渗透率 <b>25% → 50%+</b></li>
+                <li>设计标准指标体系：梳理 <b>300+</b> 指标、<b>50+</b> 常用表，提升跨团队协作效率</li>
+              </ul>
+            </div>
+            <div class="proj-block">
+              <h4>司服侧分析 Agent / 数仓需求管理</h4>
+              <ul>
+                <li>参与 B 端分析 Agent 设计落地，周内完成 <b>30+</b> 指标校验与口径对齐</li>
+                <li>独立搭建部门效率看板，需求吞吐率提升近 <b>20%</b></li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item reveal">
+          <summary>
+            <span class="acc-no">04</span>
+            <span class="acc-co">长桥证券科技</span>
+            <span class="acc-role">产品运营实习生</span>
+            <span class="acc-date">2025.01 — 2025.04</span>
+          </summary>
+          <div class="acc-body">
+            <ul>
+              <li>产品侧：用户需求整理、<b>5+</b> 竞品横向对比分析、Figma 基础 UI 与界面优化</li>
+              <li>运营侧：Metabase 数据分析，DAU 与留存长期跟踪；国际社区从冷启动到正式运行</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ======= 项目与研究 ======= -->
+    <section class="section" id="proj">
+      <div class="section-head reveal">
+        <span class="section-no">04</span>
+        <h2 data-i18n="proj_t">项目与研究</h2>
+        <span class="section-en">PROJECTS</span>
+      </div>
+      <div class="proj-grid">
+        <article class="proj-card reveal">
+          <div class="proj-top"><h3>启真问学项目 · 国创</h3><span class="proj-badge b-hl">核心成员</span></div>
+          <p class="proj-date">2024.04 — 2025.05</p>
+          <p>共同富裕经济政策研究 × AIGC 科普短片：Midjourney 出图、Runway 动图、剪映剪辑，把历史经济政策做成大众看得懂的内容。</p>
+        </article>
+        <article class="proj-card reveal">
+          <div class="proj-top"><h3>SRTP 大学生创新训练</h3><span class="proj-badge b-hl">项目负责人</span></div>
+          <p class="proj-date">2024.03 — 2025.05</p>
+          <p>数字基础设施、数字化赋能与外贸高质量发展——基于浙江省中小企业的实证研究。</p>
+        </article>
+        <article class="proj-card reveal">
+          <div class="proj-top"><h3>浙大 × 蚂蚁 · 产品经理训练营</h3><span class="proj-badge">核心成员</span></div>
+          <p class="proj-date">2024.11 — 2024.12</p>
+          <p>支付宝校园版「校园活动实时通」：AI 助手打破活动信息差、智能规划日程。负责产品构思、PRD、低保真与交互设计。</p>
+        </article>
+        <article class="proj-card reveal">
+          <div class="proj-top"><h3>北大光华管理学院案例大赛</h3><span class="proj-badge">核心成员</span></div>
+          <p class="proj-date">2024.02 — 2024.03</p>
+          <p>安恒信息企业分析：网络安全领军企业的技术战略拆解，负责案例甄选、资料整合与文档撰写。</p>
+        </article>
+        <article class="proj-card reveal">
+          <div class="proj-top"><h3>毕马威 ESG 案例分析大赛</h3><span class="proj-badge b-hl">项目负责人</span></div>
+          <p class="proj-date">2023.09 — 2023.11</p>
+          <p>金融科技在乡村振兴中的应用模式与效果分析：农村电商数据采集 + 政策研究 + 研究报告。</p>
+        </article>
+        <article class="proj-card reveal">
+          <div class="proj-top"><h3>丝芙兰创意营销大赛</h3><span class="proj-badge">核心成员</span></div>
+          <p class="proj-date">2023.03 — 2023.05</p>
+          <p>「就耀不一 YOUNG」：面向年轻消费群体的品牌营销方案，负责主题方向、品牌与市场分析。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======= 技能 ======= -->
+    <section class="section" id="skills">
+      <div class="section-head reveal">
+        <span class="section-no">05</span>
+        <h2 data-i18n="skills_t">技能</h2>
+        <span class="section-en">SKILLS</span>
+      </div>
+      <div class="skills">
+        <div class="skill-row reveal"><span class="skill-k">产品</span><span class="skill-v">PRD · 竞品分析 · 需求调研 · 交互设计 · Figma / 墨刀</span></div>
+        <div class="skill-row reveal"><span class="skill-k">数据</span><span class="skill-v">SQL · Stata · SAS · PowerBI · Metabase</span></div>
+        <div class="skill-row reveal"><span class="skill-k">AI</span><span class="skill-v">Prompt 工程 · Agent 评测 · AIGC 内容创作（MJ / Runway / 剪映 / Pr）</span></div>
+        <div class="skill-row reveal"><span class="skill-k">编程</span><span class="skill-v">Python · HTML / CSS / JS</span></div>
+        <div class="skill-row reveal"><span class="skill-k">语言</span><span class="skill-v">英语（雅思 7.0）· 法语（TFU）· 韩语（入门）· 福州话</span></div>
+        <div class="skill-row reveal"><span class="skill-k">内容</span><span class="skill-v">文案撰写 · PPT · 推文制作 · 小红书运营</span></div>
+      </div>
+    </section>
+
+    <!-- ======= 生活 ======= -->
+    <section class="section" id="life">
+      <div class="section-head reveal">
+        <span class="section-no">06</span>
+        <h2 data-i18n="life_t">工作之外</h2>
+        <span class="section-en">LIFE</span>
+      </div>
+
+      <p class="life-hint reveal">▸ <b>HOVER 解锁</b>原图</p>
+
+      <!-- 错落排布：每张保留各自原始比例（3/4 · 3/2 · 2/3 · 4/3），列内自然参差 -->
+      <div class="life-photos">
+        <!-- 静止态「高对比黑白照片 + 淡网点」，hover 解出彩色原图（纯 CSS，见 style.css .dither-wrap） -->
+        <figure class="photo reveal"><div class="dither-wrap" style="aspect-ratio: 3 / 4"><img src="assets/img/gugong.jpg" alt="故宫建筑细节" loading="lazy" /></div><figcaption>故宫 · 檐上风光</figcaption></figure>
+        <figure class="photo reveal"><div class="dither-wrap" style="aspect-ratio: 3 / 2"><img src="assets/img/datong.jpg" alt="大同打铁花" loading="lazy" /></div><figcaption>大同 · 打铁花</figcaption></figure>
+        <figure class="photo reveal"><div class="dither-wrap" style="aspect-ratio: 3 / 2"><img src="assets/img/haining.jpg" alt="海宁校区" loading="lazy" /></div><figcaption>海宁校区</figcaption></figure>
+        <figure class="photo reveal"><div class="dither-wrap" style="aspect-ratio: 2 / 3"><img src="assets/img/tulip.jpg" alt="太子湾郁金香" loading="lazy" /></div><figcaption>太子湾 · 郁金香</figcaption></figure>
+        <figure class="photo reveal"><div class="dither-wrap" style="aspect-ratio: 2 / 3"><img src="assets/img/lily.jpg" alt="茅家埠睡莲" loading="lazy" /></div><figcaption>茅家埠 · 睡莲</figcaption></figure>
+        <figure class="photo reveal"><div class="dither-wrap" style="aspect-ratio: 4 / 3"><img src="assets/img/lantern.jpg" alt="西溪湿地灯会" loading="lazy" /></div><figcaption>西溪湿地 · 灯会</figcaption></figure>
+      </div>
+
+      <div class="life-cols reveal">
+        <div class="life-block">
+          <h3>📖 阅读</h3>
+          <ul class="book-list">
+            <li><b>《认知觉醒》</b> 周岭 —— 影响我最深的成长之书</li>
+            <li><b>《上帝掷骰子吗》</b> 曹天元 —— 量子物理史话</li>
+            <li><b>《白夜行》</b> 东野圭吾 —— 在白昼的黑夜中行走</li>
+            <li><b>《献给阿尔吉侬的花束》</b> 丹尼尔·凯斯 —— 软科幻经典</li>
+          </ul>
+        </div>
+        <div class="life-block">
+          <h3>🎼 音乐 & 🗣️ 语言</h3>
+          <p>动感的音乐唤醒身体，治愈的音乐抚慰灵魂；听不同语言、不同风格、不同意义的音乐。</p>
+          <p>福州话是走出福建才发现的「加密通话」；英语是老朋友，法语是二外（TFU-4），韩语正在多邻国连胜中。</p>
+          <blockquote>「世界上有多少人，就有多少种语言。」——《爱情怎么翻译》</blockquote>
+        </div>
+        <div class="life-block">
+          <h3>📷 摄影 & 🏕️ 旅行</h3>
+          <p>一台小尼康，风景为主，偶尔人像，不打鸟。Solo 或者结伴都可以，人生漫漫，不着急。</p>
+          <p class="dim">身体和心灵，总有一个要在路上。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= 联系 ======= -->
+    <section class="section contact" id="contact">
+      <div class="section-head reveal">
+        <span class="section-no">07</span>
+        <h2 data-i18n="contact_t">找到我</h2>
+        <span class="section-en">CONTACT</span>
+      </div>
+      <div class="contact-box reveal">
+        <p class="contact-line">如果你在做有意思的 AI，<br/>或者想聊聊实习与校招——</p>
+        <a class="contact-mail" href="mailto:269108830@qq.com">269108830@qq.com</a>
+        <ul class="contact-links">
+          <li><a href="mailto:269108830@qq.com">EMAIL</a></li>
+          <li><a href="https://www.linkedin.com/in/xiaoxuan-lin-5a8476412" target="_blank" rel="noopener">LINKEDIN</a></li>
+          <li><a href="https://github.com/Sharon-xx-Lin" target="_blank" rel="noopener">GITHUB</a></li>
+          <li><span class="copy-wechat" id="copyWechat" role="button" tabindex="0" title="点击复制微信号">WECHAT: LOXOXOLO</span></li>
+        </ul>
+        <p class="contact-loc">📍 中国 · 杭州 · 可远程/异地实习</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= 页脚 ======= -->
+  <footer class="footer">
+    <p>© 2026 林晓煊 SHARON LIN</p>
+    <p class="dim">STAY HUNGRY, STAY FOOLISH.</p>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
