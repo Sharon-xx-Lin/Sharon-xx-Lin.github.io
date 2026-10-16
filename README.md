@@ -2,7 +2,16 @@
 
 定位：求职向个人展示页。风格参考 [careers.kimi.com](https://careers.kimi.com/)（黑白像素 / 高对比黑白摄影）。
 
-**当前版本：v1.5（深浅双主题 + 中文）**。英文版架构已预留，尚未开放。
+**当前版本：v1.5.1（深浅双主题 + 中文）**。英文版架构已预留，尚未开放。
+
+> **发布上线 + 上线后怎么改内容 → 见 [DEPLOY.md](DEPLOY.md)**（含临时预览链接、GitHub Pages 步骤、自定义域名、日常更新流程）。
+
+## v1.5.1：发布准备（分享卡片 + 一处显示 bug）
+
+- **修 reveal 底部盲区**：入场判据原是 `rect.top < innerHeight * 0.92`，等于要求元素顶部比视口底边再往上 8%，于是**停在视口最底部那 8% 里的元素永不显示** —— 矮窗口下首屏末尾一行字不出现，像是内容缺失。改为 `rect.top < innerHeight`（进入视口即显示）。
+- **社交分享卡片**：新增 `og:` / `twitter:` 系列 meta + `Person` 结构化数据，配 `assets/img/og-cover.png`（1200×630 像素风封面，由 `tools/gen_og.py` 生成）。链接发到微信 / 领英时显示卡片而不是裸链接。
+  ⚠️ 上线拿到正式域名后，把 `og:image` / `twitter:image` 改成**绝对地址**（见 DEPLOY.md 第四节）。
+- **发布工具**：`tools/build_dist.py` 生成优化发布包（只打包真正引用的文件、照片压缩约 40%，PSNR 35~48 dB）；`DEPLOY.md` 是发布与维护手册；`.gitignore` 排除 `.workbuddy/`、`dist/`、`.venv/`；已初始化 git 仓库。
 
 ## v1.5：摄影区统一为「高对比黑白 + 网点」一种形态
 
