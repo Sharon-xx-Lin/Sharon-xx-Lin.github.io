@@ -29,14 +29,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QUALITY = 82          # 82 是画质/体积的甜点；想更省改 78，想更保真改 88
 MAX_EDGE = 1200       # 超过则等比缩到这个边长（现有图片都 ≤1200，实际不触发）
 
-# 站点引用的图片前缀 —— 未在此列表的旧素材不会被打进发布包
-USED_IMAGES = ("portrait", "gugong", "datong", "haining", "tulip", "lily", "lantern")
-
-
 def read_used_assets():
-    """从 index.html 里扫出真实引用的资源，避免误把旧素材打进包。"""
+    """从 index.html 里扫出真实引用的资源，避免误把旧素材打进包。
+
+    同时匹配 src / href / content（后者用于 og:image、twitter:image 这类 meta）。
+    """
     html = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-    return set(re.findall(r'(?:src|href)="((?:assets|fonts)/[^"]+)"', html))
+    return set(re.findall(r'(?:src|href|content)="((?:assets|fonts)/[^"]+)"', html))
 
 
 def copy_dir(src, dst):
@@ -83,19 +82,23 @@ def main():
         src = os.path.join(ROOT, "assets", "img", name)
         if not os.path.isfile(src):
             continue                                   # 跳过 dither/ 等子目录
-        stem = os.path.splitext(name)[0]
-        if stem not in USED_IMAGES:
+        if not any(f"assets/img/{name}" in u for u in used):
             print(f"  跳过未引用：{name}")
             continue
-        if not any(f"assets/img/{name}" in u for u in used):
-            print(f"  跳过 HTML 未引用：{name}")
-            continue
         dst = os.path.join(img_out, name)
-        before, after = optimize_jpeg(src, dst)
+        before = os.path.getsize(src)
+        if name.lower().endswith((".jpg", ".jpeg")):
+            _, after = optimize_jpeg(src, dst)         # 照片压一压
+        else:
+            shutil.copy2(src, dst)                     # png 等原样复制
+            after = before
         total_before += before
         total_after += after
-        print(f"  {name:<16} {before/1024:7.1f} KB → {after/1024:7.1f} KB "
-              f"({(1 - after/before)*100:.0f}% ↓)")
+        if before != after:
+            print(f"  {name:<16} {before/1024:7.1f} KB → {after/1024:7.1f} KB "
+                  f"({(1 - after/before)*100:.0f}% ↓)")
+        else:
+            print(f"  {name:<16} {before/1024:7.1f} KB（原样）")
 
     # 4) GitHub Pages 需要：禁用 Jekyll，否则下划线开头的文件会被吞
     with open(os.path.join(out, ".nojekyll"), "w") as f:

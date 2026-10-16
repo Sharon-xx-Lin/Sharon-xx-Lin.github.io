@@ -55,7 +55,12 @@
       for (var i = els.length - 1; i >= 0; i--) {
         var el = els[i];
         var r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight * 0.92) {
+        /* 判据：**只要顶部进入视口就显示**。
+           ⚠️ 不要写成 `r.top < innerHeight * 0.92` —— 那等于要求元素顶部比视口底边
+           再往上 8%，于是**停在视口最底部那 8% 里的元素永不显示**（首屏末尾的一行字
+           在矮窗口里正好落进这个盲区，用户不滚动就看不到，像是内容缺失）。
+           也不加 `r.bottom > 0`：直接跳锚点过来时元素可能整个在视口上方，那样反而漏显示。 */
+        if (r.top < window.innerHeight) {
           el.classList.add("visible");
           els.splice(i, 1);
         }
