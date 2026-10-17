@@ -8,22 +8,28 @@ cd "/Users/linxiaoxuan/Downloads/xx personal site"
 
 ---
 
-## 当前状态
+## 当前状态（2026-10-17 已正式上线）
 
 | 项目 | 状态 |
 |---|---|
-| 临时公开链接 | https://cd6936f3fc384cfbb7e9fb883802e89b.app.workbuddy.host |
-| Git 仓库 | 已初始化，首次提交完成（分支 `main`） |
+| **正式网址** | **https://sharon-xx-lin.github.io/** |
+| 托管 | GitHub Pages（源：`Sharon-xx-Lin/Sharon-xx-Lin.github.io` 仓库 `main` 分支根目录） |
+| 远端 | `origin` = https://github.com/Sharon-xx-Lin/Sharon-xx-Lin.github.io.git<br>`backup` = https://github.com/Sharon-xx-Lin/linxiaoxuan.github.io.git（代码备份，Pages 已关） |
 | 发布包构建 | `tools/build_dist.py`（可选，见第三节） |
 
-> 那个临时链接是云端沙箱环境，**可以现在发给别人看效果，但不适合长期放在简历上**（沙箱会回收）。
-> 长期地址请按下面第一节发布。
+> 仓库名与 GitHub 账号名**完全同名**（`Sharon-xx-Lin.github.io`）才会得到不带路径的
+> `https://sharon-xx-lin.github.io/`。早期那个 `linxiaoxuan.github.io` 仓库名字和账号名不一致，
+> 网址会多一级 `/linxiaoxuan.github.io/` 路径，已弃用（只留作备份仓库）。
 
 ---
 
 ## 一、正式发布（推荐：GitHub Pages）
 
-免费、永久、改完自动更新。网址形如 `https://你的用户名.github.io/portfolio/`。
+免费、永久、改完自动更新。**本步骤已完成**（2026-10-17），下面是重建流程，留作备忘／换电脑时参考。
+
+> ⚠️ 命名规则：仓库名取成 `你的用户名.github.io` 时，网址是 `https://你的用户名.github.io/`；
+> 取其他名字（如 `portfolio`）时，网址会多一级路径 `https://你的用户名.github.io/portfolio/`。
+> 想要最干净的网址，仓库名必须与 GitHub 账号名一致。
 
 ### 第 1 步：在 GitHub 建一个空仓库
 
@@ -172,10 +178,17 @@ python3 -m venv .venv && .venv/bin/pip install pillow
 
 **换电脑了怎么继续维护？**
 ```bash
-git clone https://github.com/你的用户名/portfolio.git
-cd portfolio
+git clone https://github.com/Sharon-xx-Lin/Sharon-xx-Lin.github.io.git
+cd Sharon-xx-Lin.github.io
 ```
 然后照第二节的流程改就行了。
+
+**`git remote add origin` 报 `error: remote origin already exists`？**
+说明已经加过（或之前填的是占位地址）。不要删了再加，直接覆盖：
+```bash
+git remote set-url origin https://github.com/你的用户名/你的仓库.git
+```
+确认地址：`git remote -v`
 
 **原始照片被覆盖了想找回？**
 首次提交包含所有原图，可以随时取回：
