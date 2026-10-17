@@ -156,18 +156,11 @@
      3-a. 深浅主题切换
      ------------------------------------------------------------
      真正的配色全部在 CSS 变量里（html[data-theme]），JS 只负责：
-       ① 翻转 data-theme  ② 写 localStorage  ③ 同步 meta/favicon/无障碍标签
+       ① 翻转 data-theme  ② 写 localStorage  ③ 同步 theme-color / 无障碍标签（favicon 不随主题变）
      ============================================================ */
   var THEME_KEY = "site-theme";
-  // 与 <head> 里的内联 favicon 对应（黑底白框 ↔ 白底黑框），主题一变标签图标也跟着反色
-  var FAVICON = {
-    dark: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'>" +
-          "<rect width='16' height='16' fill='black'/><rect x='3' y='3' width='10' height='10' fill='white'/>" +
-          "<rect x='6' y='6' width='4' height='4' fill='black'/></svg>",
-    light: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'>" +
-           "<rect width='16' height='16' fill='white'/><rect x='3' y='3' width='10' height='10' fill='black'/>" +
-           "<rect x='6' y='6' width='4' height='4' fill='white'/></svg>"
-  };
+  // 站点图标固定为「黑底白标」（assets/img/favicon/），深浅主题下、深浅标签栏里都清晰，
+  // 因此不再随主题反色。曾经那套「黑底白框 ↔ 白底黑框」的 data-URI 图标已随旧像素标一起移除。
 
   function currentTheme() {
     return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
@@ -178,9 +171,6 @@
 
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", theme === "light" ? "#ffffff" : "#000000");
-
-    var icon = document.querySelector('link[rel="icon"]');
-    if (icon) icon.setAttribute("href", FAVICON[theme]);
 
     var btn = $("#themeToggle");
     if (btn) {
